@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Dialog - Modal form</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script>
+    $(function () {
+      var dialog, form;
+
+      function onSave() {
+        console.log('on save...');
+        dialog.dialog("close");
+      }
+
+      dialog = $("#dialog-form").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 350,
+        modal: true,
+        buttons: {
+          "Save": onSave,
+          Cancel: function () {
+            dialog.dialog("close");
+          }
+        },
+        close: function () {
+          window.alert('close');
+        }
+      });
+
+      $("#open-dialog").button().on("click", function () {
+        dialog.dialog("open");
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <div id="dialog-form" title="Create new user">
+    <p>Some dialog content</p>
+  </div>
+
+
+  <div id="users-contain" class="ui-widget">
+    <p>Some content</p>
+  </div>
+  <button id="open-dialog">Open dialog</button>
+
+
+</body>
+
+</html>

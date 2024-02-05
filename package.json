@@ -1,0 +1,17 @@
+{
+  "name": "html-training",
+  "version": "1.0.0",
+  "description": "Some exercises to play around with new HTML stuff",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server ./Exercises"
+  },
+  "keywords": [
+    "HTML"
+  ],
+  "author": "Mark Poelstra",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

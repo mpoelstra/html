@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+  <html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width = device-width, initial-scale=1.0">
+    <title> lazy load images using javascript </title>
+    <style>
+      img {
+        width: 500px;
+        height: 350px;
+        display: block;
+        margin: 10px auto;
+      }
+
+      body {
+        height: 100%;
+        width: 100%;
+        background-color: #333;
+        color: whitesmoke;
+        font-size: 16px;
+        font-family: 'Lato';
+      }
+
+      h1 {
+        position: relative;
+        padding: 0;
+        margin: 0;
+        font-family: "Raleway", sans-serif;
+        font-weight: 300;
+        font-size: 40px;
+        color: white;
+        text-align: center;
+        -webkit-transition: all 0.4s ease 0s;
+        -o-transition: all 0.4s ease 0s;
+        transition: all 0.4s ease 0s;
+      }
+    </style>
+  </head>
+  <h1> Example lazy load images using jquery </h1>
+
+  <body>
+    <img class="lazy-load" data-src="https://www.ordina.com/_nuxt/Ordina-logo.5a81b9e4.svg">
+    <img class="lazy-load" data-src="https://europeanjournalists.org/wp-content/uploads/2020/10/Capture-de%CC%81cran-2020-10-16-a%CC%80-16.42.52-597x400.png">
+    <img class="lazy-load" data-src="https://www.xaris.nl/wp-content/uploads/2020/04/Logo-NS.png">
+    <img class="lazy-load" data-src="https://www.vkon.nl/wp-content/uploads/2022/12/Rabobank-Logo.png">
+    <img class="lazy-load" data-src="https://www.wijchensnieuws.nl/uploads/2018/01/politie-logo.png">
+    <img class="lazy-load" data-src="https://www.dorpsraadoostrum.nl/wp-content/uploads/2018/12/prorailnieuwste-750x410.jpg">
+    <img class="lazy-load" data-src="https://opgelicht.assets.avrotros.nl/user_upload/CJIB15-4.jpg">
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let lazyloadImages = document.querySelectorAll("img.lazy-load");
+        let lazyloadThrottleTimeout;
+        function lazyload() {
+          if (lazyloadThrottleTimeout) {
+            clearTimeout(lazyloadThrottleTimeout);
+          }
+          lazyloadThrottleTimeout = setTimeout(function () {
+            let scrollTop = window.pageYOffset;
+            lazyloadImages.forEach(function (img) {
+              if (img.offsetTop < (window.innerHeight + scrollTop)) {
+                if (!img.classList.contains('loaded')) {
+                  img.src = img.dataset.src;
+                  img.classList.remove('lazy');
+                  img.classList.add('loaded');
+                }
+              }
+            });
+            if (lazyloadImages.length == 0) {
+              document.removeEventListener("scroll", lazyload);
+              window.removeEventListener("resize", lazyload);
+              window.removeEventListener("orientationChange", lazyload);
+            }
+          }, 20);
+        }
+        document.addEventListener("scroll", lazyload);
+        window.addEventListener("resize", lazyload);
+        window.addEventListener("orientationChange", lazyload);
+      });  
+    </script>
+  </body>
+
+  </html>
