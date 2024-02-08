@@ -6,7 +6,22 @@
   <title>HTML Dialog</title>
 
   <style>
-    /* insert styles here */
+
+    button:focus {
+      border: 3px solid blue;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    output {
+      border: 5px dotted black;
+      width: 300px;
+      height: 100px;
+      display: block;
+    }
   </style>
 </head>
 
@@ -18,9 +33,67 @@
   - play around with backdrop styling
   - play around with the returnValue property of the dialog
   - play around with the autofocus abilities of the dialog
+  - method=dialog: When the form is inside a <dialog>, closes the dialog and causes a submit event to be fired on submission, without submitting data or clearing the form.
+  - button default submit, will close the dialog with the value of the button
+  - or preventdefault and close the dialog with your own value
 -->
 
 <body>
   <main>
+    <dialog>
+      <div class="actions">
+        <button>Another button</button>
+        <button class="focusBtn" autofocus>X</button>
+      </div>
+      <p>This modal dialog has a groovy backdrop!</p>
+      <form>
+        <p>
+          <label>
+            How old are you?
+            <input type="number">
+          </label>
+        </p>
+        <div>
+          <button value="cancelBtn" formmethod="dialog">Cancel</button>
+          <button id="confirmBtn" value="default">Confirm</button>
+        </div>
+      </form>
+    </dialog>
+
+    <button>Show the dialog</button>
+    <p>Output:</p>
+    <output></output>
   </main>
+
+  <script>
+    const dialog = document.querySelector("dialog");
+    const output = document.querySelector("output");
+    const showButton = document.querySelector("dialog + button");
+    const closeButton = document.querySelector("dialog .focusBtn");
+    const inputEl = dialog.querySelector("input");
+    const confirmBtn = dialog.querySelector("#confirmBtn");
+
+    // "Show the dialog" button opens the dialog modally
+    showButton.addEventListener("click", () => {
+      dialog.showModal();
+    });
+
+    confirmBtn.addEventListener("click", (event) => {
+      event.preventDefault(); // We don't want to submit this fake form
+      dialog.close(inputEl.value); // Have to send the input value here.
+    });
+
+    // "Close" button closes the dialog
+    closeButton.addEventListener("click", () => {
+      debugger;
+      dialog.close();
+    });
+
+    dialog.addEventListener("close", (e) => {
+      debugger;
+      output.value = dialog.returnValue; // Have to check for "default" rather than empty string
+    });
+  </script>
 </body>
+
+</html>

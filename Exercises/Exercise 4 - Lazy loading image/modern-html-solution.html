@@ -6,17 +6,53 @@
   <title>HTML Datalist</title>
 
   <style>
-    /* insert styles here */
+    img {
+        width: 500px;
+        height: 350px;
+        display: block;
+        margin: 10px auto;
+      }
+
+      body {
+        height: 100%;
+        width: 100%;
+        background-color: #333;
+        color: whitesmoke;
+        font-size: 16px;
+        font-family: 'Lato';
+      }
   </style>
 </head>
 
 <!--
-  make use of the new native lazyload feature
+  make use of the new native lazyload feature on images by using the loading attrbute:
   - https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading
   - play with load event and complete property..
 -->
 
 <body>
   <main>
+
+    <img id="1" loading="lazy" src="https://www.ordina.com/_nuxt/Ordina-logo.5a81b9e4.svg">
+    <img id="2" loading="lazy" src="https://europeanjournalists.org/wp-content/uploads/2020/10/Capture-de%CC%81cran-2020-10-16-a%CC%80-16.42.52-597x400.png">
+    <img id="3" loading="lazy" src="https://www.xaris.nl/wp-content/uploads/2020/04/Logo-NS.png">
+    <img id="4" loading="lazy" src="https://www.vkon.nl/wp-content/uploads/2022/12/Rabobank-Logo.png">
+    <img id="5" loading="lazy" src="https://www.wijchensnieuws.nl/uploads/2018/01/politie-logo.png">
+    <img id="6" loading="lazy" src="https://www.dorpsraadoostrum.nl/wp-content/uploads/2018/12/prorailnieuwste-750x410.jpg">
+    <img id="7" loading="lazy" src="https://opgelicht.assets.avrotros.nl/user_upload/CJIB15-4.jpg">
   </main>
+
+  <script>
+    const img = document.querySelectorAll("img");
+    
+    img.forEach(image => {
+      console.log('complete: ', image.id, image.complete);
+      image.addEventListener("load", (e) => {
+        console.log('loaded', image.id, e.currentTarget.src);
+        console.log('complete', image.id, e.currentTarget.complete);
+      });
+    })
+  </script>
 </body>
+
+</html>
